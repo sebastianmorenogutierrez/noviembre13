@@ -6,7 +6,6 @@
     "php": "^8.0",
     "mongodb/mongodb": "^1.14"
   },
-  "require-dev": {},
   "autoload": {
     "psr-4": {
       "MiProyecto\\": "src/"
