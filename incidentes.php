@@ -1,5 +1,5 @@
 <?php
-require 'vendor/autoload.php'; // Cargar Composer y la librería de MongoDB
+require 'vendor/autoload.php';
 use MongoDB\Client;
 
 $mensaje = "";
@@ -7,15 +7,15 @@ $tipoMensaje = "";
 $documentos = [];
 
 try {
-    // Conexión al servidor MongoDB
-    $cliente = new Client("mongodb+srv://incidentes_dbsebastian:12345678910@incidentes.un8zeze.mongodb.net/?appName=incidentes");
+    // Usar variable de entorno para la conexión
+    $mongoUri = getenv('MONGODB_URI') ?: "mongodb+srv://incidentes_dbsebastian:12345678910@incidentes.un8zeze.mongodb.net/?appName=incidentes";
+    $cliente = new Client($mongoUri);
 
     $db = $cliente->incidentes;
     $coleccion = $db->reportes;
 
     // Procesar formulario si se envió
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Validar datos
         $nombre = isset($_POST['nombre']) ? trim($_POST['nombre']) : '';
         $email = isset($_POST['email']) ? trim($_POST['email']) : '';
         $tipo_incidente = isset($_POST['tipo_incidente']) ? trim($_POST['tipo_incidente']) : '';
@@ -30,7 +30,6 @@ try {
             $mensaje = "❌ Email inválido";
             $tipoMensaje = "danger";
         } else {
-            // Crear documento
             $documento = [
                 "nombre" => $nombre,
                 "email" => $email,
@@ -54,7 +53,6 @@ try {
         }
     }
 
-    // Consultar todos los reportes y convertir a array
     $consulta = $coleccion->find([], [
         'sort' => ['fecha_registro' => -1],
         'limit' => 100
@@ -70,6 +68,7 @@ try {
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestión de Incidentes Técnicos</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -78,14 +77,12 @@ try {
   <h1 class="text-center text-primary mb-4">🔧 Reporte de Incidentes</h1>
   <p class="text-center text-secondary">Sistema de registro técnico de fallos</p>
 
-  <!-- Mensajes -->
   <?php if (!empty($mensaje)): ?>
     <div class="alert alert-<?php echo $tipoMensaje; ?> text-center">
       <?php echo $mensaje; ?>
     </div>
   <?php endif; ?>
 
-  <!-- Formulario -->
   <form action="incidentes.php" method="post" class="p-4 bg-white shadow rounded mb-4">
     <div class="mb-3">
       <label for="nombre" class="form-label">Nombre del Reportante *</label>
@@ -129,7 +126,6 @@ try {
     </div>
   </form>
 
-  <!-- Tabla de reportes -->
   <h2 class="text-primary">📋 Reportes registrados</h2>
   <?php if (!empty($documentos)): ?>
     <div class="table-responsive">
