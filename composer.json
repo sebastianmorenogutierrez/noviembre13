@@ -3,8 +3,8 @@
   "description": "Sistema de gestión de incidentes técnicos",
   "type": "project",
   "require": {
-    "php": "^8.0",
-    "mongodb/mongodb": "^1.15"
+    "php": "^7.4",
+    "mongodb/mongodb": "^1.14"
   },
   "require-dev": {},
   "autoload": {
