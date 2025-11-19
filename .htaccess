@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# Redirigir a index.html si existe
+DirectoryIndex index.html incidentes.php
+
+# Permitir acceso a archivos PHP
+<FilesMatch "\.php$">
+    SetHandler application/x-httpd-php
+</FilesMatch>
+
+# Habilitar CORS si es necesario
+Header set Access-Control-Allow-Origin "*"

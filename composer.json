@@ -1,0 +1,13 @@
+{
+  "name": "mi-proyecto/incidentes",
+  "description": "Sistema de gestión de incidentes técnicos",
+  "type": "project",
+  "require": {
+    "php": "^8.0",
+    "mongodb/mongodb": "^1.15"
+  },
+  "require-dev": {},
+  "autoload": {
+    "psr-4": {}
+  }
+}
