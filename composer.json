@@ -3,11 +3,18 @@
   "description": "Sistema de gestión de incidentes técnicos",
   "type": "project",
   "require": {
-    "php": "^7.4",
+    "php": "^8.0",
     "mongodb/mongodb": "^1.14"
   },
   "require-dev": {},
   "autoload": {
-    "psr-4": {}
+    "psr-4": {
+      "MiProyecto\\": "src/"
+    }
+  },
+  "config": {
+    "platform": {
+      "php": "8.0.0"
+    }
   }
 }
